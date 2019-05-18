@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class Tradutor {
+	
+	AVL avl;
+	
+	public Tradutor() {
 
+	}
 	
 	protected void carregaDicionario(String filepath) throws IOException {
 		
@@ -16,7 +21,7 @@ public class Tradutor {
 			String line;
 			String[] palavras;
 			
-			AVL avl = new AVL();
+			this.avl = new AVL();
 			
 			while((line = br.readLine()) != null) {
 				
@@ -26,13 +31,15 @@ public class Tradutor {
 				
 				//System.out.println(dicionario);
 				
-				avl.insert(palavras[0]);
+				//avl.insert(palavras[0]);
 				
-				//avl.insert(dicionario);
+				this.avl.insert(dicionario);
 				
-			}
-			
-			avl.inOrder();		
+				this.avl.inOrder();
+				System.out.println();
+				System.out.println();
+				
+			}	
 		} 
 		
 	}
@@ -47,6 +54,10 @@ public class Tradutor {
 	
 	public void salvaDicionario(String filepath) {
 		
+	}
+	
+	public void mostrarDicionario() {
+		this.avl.inOrder();
 	}
 	
 }

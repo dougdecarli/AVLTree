@@ -14,6 +14,8 @@ public class Main {
 			System.out.println("");
 			e.printStackTrace();
 		}
+		
+		tradutor.mostrarDicionario();
 			
 	}
 
