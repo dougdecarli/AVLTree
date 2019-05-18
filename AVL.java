@@ -100,8 +100,9 @@ public class AVL {
 				System.out.println("Node " + key + " inserted as a left child of Node " + node.getKey());
 				return true;
 			}		
-			else
-				return insert(key, current);			
+			else {
+				return insert(key, current);	
+			}
 		}
 		
 		else if(compare > 0) {			
@@ -112,11 +113,25 @@ public class AVL {
 				System.out.println("Node " + key + " inserted as a right child of Node " + node.getKey());
 				return true;			
 			}			
-			else
+			else {
 				return insert(key , current);
+			}
 		}		
 		
 		return false;
 	}
 	
+    public void inOrder() {
+        inOrder(this.root);
+    }
+    
+    private void inOrder(Node node) {
+        if (node != null)
+        {
+            inOrder(node.getLeftChild());
+            System.out.println(node.getKey() + " " + node.calculateBalanceFactor());
+            inOrder(node.getRightChild());
+        }
+    }
+    
 }

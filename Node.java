@@ -3,19 +3,21 @@ package tradutor;
 public class Node {
 	
 	private Dicionario dicionario;
+	private int balanceFactor;
 	private String key;
 	private Node parentNode;
 	private Node leftChild;
 	private Node rightChild;
-	private int heigth;
 	
 	Node(String key){
 		this.key = key;
+		this.balanceFactor = 0;
 	}
 	
 	Node(Dicionario dicionario){
 		this.dicionario = dicionario;
 		this.key = dicionario.getPalavra();
+		this.balanceFactor = 0;
 	}
 	
 	public String getKey() {
@@ -46,6 +48,12 @@ public class Node {
 		this.parentNode = node;
 	}
 	
+	public boolean isBalanced() {
+		if(this.balanceFactor <= -2 || this.balanceFactor >= 2)
+			return false;
+		return true;
+	}
+	
 	public String toString() {
 		String basic = "Key: " + this.key + "; Parent: " + this.parentNode.getKey() + "; ";
 		
@@ -60,5 +68,29 @@ public class Node {
 		
 		return basic + "Left Child: " + this.leftChild.getKey() + "; Right Child: " + this.rightChild.getKey() + ";";		
 	}
+	
+	public int calculateBalanceFactor() {
+		
+		int leftSubtreeHeigth = 0;
+		int rightSubtreeHeigth = 0;
+		
+		Node current = this;
+		
+		while(current.getLeftChild() != null) {
+			leftSubtreeHeigth += 1;
+			current = current.getLeftChild();
+		}
+		
+		current = this;
+		
+		while(current.getRightChild() != null) {
+			rightSubtreeHeigth += 1;
+			current = current.getRightChild();
+		}
+		
+		return leftSubtreeHeigth - rightSubtreeHeigth;
+		
+	}
+
 	
 }
