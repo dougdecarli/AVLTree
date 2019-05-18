@@ -30,7 +30,7 @@ public class Tradutor {
 				
 			}
 			
-			avl.inOrder(avl.getRoot());
+			avl.inOrder();
 			
 		} 
 		

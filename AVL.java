@@ -16,43 +16,73 @@ public class AVL {
 		return this.root;
 	}
 	
-	public void insert(String key) {
-		Node current = root;
-		Node parent = current;
+	public boolean insert(String key) {
+		
+		if(key == null)
+			throw new NullPointerException();
 		
 		if(root == null) {
 			root = new Node(key);
+			return true;
 		}
-		else {
-			while(current != null && key != current.getKey()) {
-				if(key.compareToIgnoreCase(current.getKey()) < 0) {
-					parent = current;
-					current = current.getLeftChild();
-				}
-				else {
-					parent = current;
-					current = current.getRightChild();
-				}
-			}
-			
-			if(key.compareToIgnoreCase(parent.getKey()) < 0 && parent.getLeftChild() == current){
-				parent.setLeftChild(new Node(key));
-			}
-			
-			if(key.compareToIgnoreCase(parent.getKey()) > 0 && parent.getLeftChild() == current){
-				parent.setRightChild(new Node(key));
-			}		
-		}
+		
+		return insert(key, root);
 	}
 	
-	public void inOrder(Node current) {
-		if (current == null) {
-			System.out.print("null ");
-		} else {
-			inOrder(current.getLeftChild());
-			System.out.print(current.getKey() + " ");
-			inOrder(current.getRightChild());
+	public boolean insert(String key, Node parent) {
+		
+		String parentKey = parent.getKey();
+		Node current;
+		
+		if(key.equals(parentKey))
+			throw new IllegalArgumentException("A duplicated key was inserted.");
+		
+		int compare = key.compareTo(parentKey);
+		
+		if(compare < 0) {
+			
+			current = parent.getLeftChild();
+			
+			if(current == null) {
+				parent.setLeftChild(new Node(key));
+				return true;
+			}
+			
+			else {
+				return insert(key, current);
+			}
+			
 		}
+		
+		else if(compare > 0) {
+			
+			current = parent.getRightChild();
+			
+			if(current == null) {
+				parent.setRightChild(new Node(key));
+				return true;
+			}
+			
+			else{
+				return insert(key , current);
+			}
+			
+		}		
+		
+		return false;
+	}
+	
+	public void inOrder() {
+		inOrder(root);
+	}
+	
+	public void inOrder(Node node) {
+		if (node == null)
+			return;
+		
+	    inOrder(node.getLeftChild());
+	    System.out.println(node);
+	    inOrder(node.getRightChild());
 	}
 	
 }
