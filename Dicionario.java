@@ -3,8 +3,8 @@ package tradutor;
 import java.util.LinkedList;
 
 public class Dicionario {
-
-	protected String palavra;
+	
+	protected String palavra; //Key
 	protected LinkedList<String> definicoes;
 	
 	public Dicionario(String[] palavras) {
@@ -14,6 +14,20 @@ public class Dicionario {
 		
 		for(int i=1; i<palavras.length;i++)
 			this.definicoes.add(palavras[i]);
+	}
+	
+	public String getPalavra() {
+		return this.palavra;
+	}
+	
+	public String[] getDefinicoes() {
+		String[] definicoes = null;
+		
+		for(int i = 0; i<this.definicoes.size(); i++) {
+			definicoes[i] = this.definicoes.get(i);
+		}
+		
+		return definicoes;
 	}
 	
 	public String toString() {

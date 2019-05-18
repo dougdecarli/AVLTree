@@ -1,15 +1,21 @@
 package tradutor;
 
 public class Node {
-
-	public String key;
-	Node parentNode;
-	Node leftChild;
-	Node rightChild;
-	int heigth;
+	
+	private Dicionario dicionario;
+	private String key;
+	private Node parentNode;
+	private Node leftChild;
+	private Node rightChild;
+	private int heigth;
 	
 	Node(String key){
 		this.key = key;
+	}
+	
+	Node(Dicionario dicionario){
+		this.dicionario = dicionario;
+		this.key = dicionario.getPalavra();
 	}
 	
 	public String getKey() {

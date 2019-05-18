@@ -26,11 +26,11 @@ public class Tradutor {
 				
 				//System.out.println(dicionario);
 				
-				avl.insert(palavras[0]);
+				//avl.insert(palavras[0]);
+				
+				avl.insert(dicionario);
 				
 			}
-			
-			avl.inOrder();
 			
 		} 
 		
