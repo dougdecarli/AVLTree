@@ -48,13 +48,7 @@ public class Node {
 		this.parentNode = node;
 	}
 	
-	public Dicionario getDicionario( ) {
-		return this.dicionario;
-	}
-	
 	public boolean isBalanced() {
-		this.getBalanceFactor();
-
 		if(this.balanceFactor <= -2 || this.balanceFactor >= 2)
 			return false;
 		return true;
@@ -75,51 +69,28 @@ public class Node {
 		return basic + "Left Child: " + this.leftChild.getKey() + "; Right Child: " + this.rightChild.getKey() + ";";		
 	}
 	
-	public int getBalanceFactor() {
+	public int calculateBalanceFactor() {
+		
 		int leftSubtreeHeigth = 0;
 		int rightSubtreeHeigth = 0;
 		
-		Node current = this.getLeftChild();
+		Node current = this;
 		
-		if(current != null) {
-			while(current.getLeftChild() != null || current.getRightChild() != null) {
-				if(current.getLeftChild() != null) {
-					leftSubtreeHeigth += 1;
-					current = current.getLeftChild();
-				}
-				else if(current.getRightChild() != null) {
-					leftSubtreeHeigth += 1;
-					current = current.getRightChild();
-				}	
-			}
+		while(current.getLeftChild() != null) {
+			leftSubtreeHeigth += 1;
+			current = current.getLeftChild();
 		}
 		
-		current = this.getRightChild();
+		current = this;
 		
-		if(current != null) {
-			while(current.getLeftChild() != null || current.getRightChild() != null) {
-				if(current.getLeftChild() != null) {
-					leftSubtreeHeigth += 1;
-					current = current.getLeftChild();
-				}
-				else if(current.getRightChild() != null) {
-					leftSubtreeHeigth += 1;
-					current = current.getRightChild();
-				}	
-			}		
+		while(current.getRightChild() != null) {
+			rightSubtreeHeigth += 1;
+			current = current.getRightChild();
 		}
 		
-		this.balanceFactor = leftSubtreeHeigth - rightSubtreeHeigth;
+		return leftSubtreeHeigth - rightSubtreeHeigth;
 		
-		return this.balanceFactor;		
 	}
-	
-	public int getLeftSubtreeHeigth() {
-		return 0;
-	}
-	
-	public int getRightSubtreeHeigth() {
-		return 0;
-	}
+
 	
 }

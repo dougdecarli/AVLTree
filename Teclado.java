@@ -11,7 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Tradutor {
+	
+	AVL avl;
+	
+	public Tradutor() {
 
+	}
 	
 	protected void carregaDicionario(String filepath) throws IOException {
 		
@@ -20,7 +25,7 @@ public class Tradutor {
 			String line;
 			String[] palavras;
 			
-			AVL avl = new AVL();
+			this.avl = new AVL();
 			
 			while((line = br.readLine()) != null) {
 				
@@ -28,19 +33,13 @@ public class Tradutor {
 				
 				Dicionario dicionario = new Dicionario(palavras);
 				
-<<<<<<< HEAD
 				this.avl.insert(dicionario);
-=======
-				//System.out.println(dicionario);
 				
-				avl.insert(palavras[0]);
->>>>>>> parent of 9161227... fixed the balancing factor calculation
+				this.avl.inOrder();
+				System.out.println();
+				System.out.println();
 				
-				//avl.insert(dicionario);
-				
-			}
-			
-			avl.inOrder();		
+			}	
 		} 
 		
 	}
@@ -89,6 +88,10 @@ public class Tradutor {
 			}
 		}
 	
+	}
+	
+	public void mostrarDicionario() {
+		this.avl.inOrder();
 	}
 	
 }

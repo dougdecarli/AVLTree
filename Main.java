@@ -18,6 +18,7 @@ public class Main {
 			System.out.println("");
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		
 		//tradutor.mostrarDicionario();
 		
@@ -80,5 +81,9 @@ public class Main {
 		while (op != 0);
         
     }
+=======
+			
+	}
+>>>>>>> parent of 9161227... fixed the balancing factor calculation
 
 }

@@ -94,9 +94,7 @@ public class AVL {
 			
 			if(current == null) {
 				node.setLeftChild(new Node(dicionario));
-				
 				System.out.println("Node " + dicionario.getPalavra() + " (" + dicionario + ") inserted as a left child of Node " + node.getKey());
-				
 				return true;
 			}		
 			else
@@ -126,11 +124,12 @@ public class AVL {
         if (node != null)
         {
             inOrder(node.getLeftChild());
-            System.out.println(node.getDicionario() + " " + node.getBalanceFactor());
+            System.out.println(node.getKey() + " " + node.calculateBalanceFactor());
             inOrder(node.getRightChild());
         }
     }
     
+<<<<<<< HEAD
     public void rsd() {
     	
     }
@@ -140,4 +139,6 @@ public class AVL {
     
     
     
+=======
+>>>>>>> parent of 9161227... fixed the balancing factor calculation
 }
