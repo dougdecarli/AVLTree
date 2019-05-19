@@ -1,6 +1,8 @@
 package tradutor;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Dicionario {
 	
@@ -20,11 +22,11 @@ public class Dicionario {
 		return this.palavra;
 	}
 	
-	public String[] getDefinicoes() {
-		String[] definicoes = null;
+	public List<String> getDefinicoes() {
+		List<String> definicoes = new ArrayList<String>(this.definicoes.size());
 		
 		for(int i = 0; i<this.definicoes.size(); i++) {
-			definicoes[i] = this.definicoes.get(i);
+			definicoes.add(this.definicoes.get(i));
 		}
 		
 		return definicoes;
