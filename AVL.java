@@ -1,5 +1,8 @@
 package tradutor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AVL {
 	
 	private Node root;
@@ -15,6 +18,51 @@ public class AVL {
 	public Node getRoot() {
 		return this.root;
 	}
+	
+	public Node search(String key) {
+	    Node current = root;
+
+	    while (current != null) {
+	        int comparison = key.compareTo(current.getKey());
+	        if (comparison == 0) {
+	            return current;
+	        } else if (comparison < 0) {
+	            current = current.getLeftChild();
+	        } else { 
+	            current = current.getRightChild();
+	        }
+	    }
+
+	    return null;
+	}
+	
+	public List<Dicionario> getDicionario() {
+    	List<Dicionario> dicionario = new ArrayList<Dicionario>();
+    	
+    	Node current = root;
+    	
+    	if(current != null)
+    		dicionario.add(current.getDicionario());
+ 	    
+ 	    while(current != null) {
+ 	    	
+ 	    	if(current.getLeftChild() != null) {
+ 	    		dicionario.add(current.getLeftChild().getDicionario());
+ 	    		current = current.getLeftChild();
+ 	    	}
+ 	    	
+ 	    	else if(current.getRightChild() != null) {
+ 	    		dicionario.add(current.getRightChild().getDicionario());
+ 	    		current = current.getRightChild();
+ 	    	}
+ 	    	
+ 	    	else
+ 	    		return dicionario;
+ 	    		
+ 	    }
+ 	    
+ 	    return null;
+    }
 	
 	public boolean insert(Dicionario dicionario) {
 		if(dicionario == null)
@@ -70,59 +118,6 @@ public class AVL {
 		return false;
 	}	
 	
-	public boolean insert(String key) {
-		
-		if(key == null)
-			throw new NullPointerException();
-		
-		if(root == null) {
-			System.out.println("Root " + key + " inserted");
-			root = new Node(key);
-			return true;
-		}
-		
-		return insert(key, root);
-	}
-	
-	public boolean insert(String key, Node node) {
-		
-		Node current;
-		String parentKey = node.getKey();
-		
-		if(key.equals(parentKey))
-			throw new IllegalArgumentException("A duplicated key was inserted.");
-		
-		int compare = key.compareTo(parentKey);
-		
-		if(compare < 0) {			
-			current = node.getLeftChild();
-			
-			if(current == null) {
-				node.setLeftChild(new Node(key));
-				System.out.println("Node " + key + " inserted as a left child of Node " + node.getKey());
-				return true;
-			}		
-			else {
-				return insert(key, current);	
-			}
-		}
-		
-		else if(compare > 0) {			
-			current = node.getRightChild();
-			
-			if(current == null) {
-				node.setRightChild(new Node(key)); 
-				System.out.println("Node " + key + " inserted as a right child of Node " + node.getKey());
-				return true;			
-			}			
-			else {
-				return insert(key , current);
-			}
-		}		
-		
-		return false;
-	}
-	
     public void inOrder() {
         inOrder(this.root);
     }
@@ -139,5 +134,10 @@ public class AVL {
     public void rsd() {
     	
     }
+    
+    
+    
+    
+    
     
 }
