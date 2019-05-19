@@ -78,14 +78,16 @@ public class Tradutor {
 		
 	}
 	
-	public void salvaDicionario(String filepath) {
-		try (FileWriter writer = new FileWriter(filepath);
-	             BufferedWriter bw = new BufferedWriter(writer)) {
-
+	public void salvaDicionario(String filepath) throws IOException {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
+			List<Dicionario> dicionario = new ArrayList<Dicionario>(avl.getDicionario());
 			
-	        } catch (IOException e) {
-	            System.err.format("IOException: %s%n", e);
-	        }
+			for (int i = 0; i < dicionario.size(); i++) {
+				bw.write(dicionario.get(i).toString());
+				bw.newLine(); 
+			}
+		}
+	
 	}
 	
 	public void mostrarDicionario() {
