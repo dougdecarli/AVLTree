@@ -19,14 +19,14 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		
-		
-		tradutor.mostrarDicionario();
+		//tradutor.mostrarDicionario();
 		
 		int op;
         System.out.print('\u000C');//Limpar dados
 		
 		do {
+			System.out.println("");
+			System.out.println("");
             System.out.println("Digite 1 para buscar tradução para palavra em inglês");
             System.out.println("Digite 2 para inserir uma nova palavra no dicionário");
             System.out.println("Digite 3 salvar o arquivo dicionário");
@@ -58,11 +58,20 @@ public class Main {
             		
             	tradutor.insereTraducao(palavra, definicoesList);
             	
+            	//Limpar variavel palavra
+            	palavra = "";
+            	
             }
             
             else if(op == 3) {
             	
-            	tradutor.salvaDicionario("C:\\Users\\SUARIO\\Downloads\\dicionario_salvo.txt");
+            	try {
+					tradutor.salvaDicionario("C:\\Users\\SUARIO\\Downloads\\dicionario_salvo.txt");
+					System.out.println("Dicionário salvo com sucesso!");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
            
             
