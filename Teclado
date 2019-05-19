@@ -1,97 +1,182 @@
 package tradutor;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
-public class Tradutor {
-	
-	AVL avl;
-	
-	public Tradutor() {
 
-	}
-	
-	protected void carregaDicionario(String filepath) throws IOException {
-		
-		try(BufferedReader br = new BufferedReader(new FileReader(filepath))){
-			
-			String line;
-			String[] palavras;
-			
-			this.avl = new AVL();
-			
-			while((line = br.readLine()) != null) {
-				
-				palavras = line.split("#");
-				
-				Dicionario dicionario = new Dicionario(palavras);
-				
-				this.avl.insert(dicionario);
-				
-				this.avl.inOrder();
-				System.out.println();
-				System.out.println();
-				
-			}	
-		} 
-		
-	}
-	
-	public List<String> traduzPalavra(String palavra) {
-		
-		Node n = avl.search(palavra);
-		
-		if(n != null) {
-			int length = n.getDicionario().getDefinicoes().size();
-			List<String> definicoes = new ArrayList<String>(length);
-			
-			for(int i = 0; i < length; i++) {
-				definicoes.add(n.getDicionario().getDefinicoes().get(i));
-			}
-			
-			return definicoes;
-		}
-	
-		
-		return null;
-	}
-	
-	public void insereTraducao(String palavra, List<String> definicoes) {
-		//Array de palavra + traducoes para realizar o insert
-		String[] palavras = new String[definicoes.size() + 1];
-		
-		palavras[0] = palavra;
-		for(int i = 0; i < definicoes.size(); i++)
-			//palavras já foi inicializado com palavra
-			palavras[i+1] = definicoes.get(i);
-		
-		Dicionario dicionario = new Dicionario(palavras);
-		this.avl.insert(dicionario);
-		this.avl.inOrder();
-		
-	}
-	
-	public void salvaDicionario(String filepath) throws IOException {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
-			List<Dicionario> dicionario = new ArrayList<Dicionario>(avl.getDicionario());
-			
-			for (int i = 0; i < dicionario.size(); i++) {
-				bw.write(dicionario.get(i).toString());
-				bw.newLine(); 
-			}
-		}
-	
-	}
-	
-	public void mostrarDicionario() {
-		this.avl.inOrder();
-	}
-	
+import java.io.*;
+
+/** Classe que permite fazer leitura de dados do tecladeo */
+
+public class Teclado
+{
+     private String s;
+     private InputStreamReader i = new InputStreamReader (System.in);
+     private BufferedReader d = new BufferedReader(i);
+
+     /**
+        Lï¿½ um inteiro.
+        @return int
+     */
+     public int leInt ()
+     {   int a = 0;
+         try
+         {
+             s = d.readLine();
+             a = Integer.parseInt(s);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: " + e);
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser inteiro: "+e );
+         }
+         return (a);
+     }
+
+     /**
+        Lï¿½ um inteiro, com mensagem.
+        @return int
+     */
+     public int leInt (String msg)
+     {   int a = 0;
+         System.out.println(msg);
+         try
+         {
+             s = d.readLine();
+             a = Integer.parseInt(s);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: "+e );
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser inteiro: "+e );
+         }
+         return (a);
+     }
+
+     /**
+        Lï¿½ um double.
+        @return double
+     */
+     public double leDouble()
+     {   double a = 0;
+         try
+         {
+             s = d.readLine();
+             a = Double.parseDouble(s);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: " + e);
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser nï¿½mero: "+e );
+         }
+         return (a);
+     }
+
+     /**
+        Lï¿½ um double, com mensagem.
+        @return double
+     */
+     public double leDouble(String msg)
+     {   double a = 0;
+         System.out.println(msg);
+         try
+         {
+             s = d.readLine();
+             a = Double.parseDouble(s);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: " + e);
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser numero: "+e );
+         }
+         return (a);
+     }
+
+     /**
+        Lï¿½ um string.
+        @return String
+     */
+     public String leString()
+     {   s = "";
+         try
+         {
+            s = d.readLine();
+         }
+         catch (IOException e)
+         {
+            System.out.println ("Erro de I/O: " + e);
+         }
+         return (s);
+     }
+
+     /**
+        Lï¿½ um string. com mensagem.
+        @return String
+     */
+     public String leString(String msg)
+     {   s = "";
+         System.out.println(msg);
+         try
+         {
+            s = d.readLine();
+         }
+         catch (IOException e)
+         {
+            System.out.println ("Erro de I/O: " + e);
+         }
+         return (s);
+     }
+     
+     public char leChar()
+     {   char a = ' ';
+         try
+         {
+             s = d.readLine();
+             a = s.charAt(0);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: " + e);
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser char: "+e );
+         }
+         return (a);
+     }
+
+     /**
+        Lï¿½ um char, com mensagem.
+        @return char
+     */
+     public char leChar(String msg)
+     {   char a = ' ';
+         System.out.println(msg);
+         try
+         {
+             s = d.readLine();
+             a = s.charAt(0);
+         }
+         catch (IOException e)
+         {
+             System.out.println ("Erro de I/O: " + e);
+         }
+         catch (NumberFormatException e)
+         {
+             System.out.println ("o valor digitado deve ser um char: "+e );
+         }
+         return (a);
+     }
 }
+
+
