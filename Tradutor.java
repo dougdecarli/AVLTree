@@ -1,94 +1,47 @@
 package tradutor;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Tradutor {
-
 	
-	protected void carregaDicionario(String filepath) throws IOException {
-		
+	AVL avl;
+	
+	protected void carregaDicionario(String filepath) throws IOException {			
 		try(BufferedReader br = new BufferedReader(new FileReader(filepath))){
-			
 			String line;
 			String[] palavras;
 			
-			AVL avl = new AVL();
+			this.avl = new AVL();
 			
 			while((line = br.readLine()) != null) {
-				
-				palavras = line.split("#");
-				
-				Dicionario dicionario = new Dicionario(palavras);
-				
-<<<<<<< HEAD
+				palavras = line.split("#");				
+				Dicionario dicionario = new Dicionario(palavras);				
 				this.avl.insert(dicionario);
-=======
-				//System.out.println(dicionario);
-				
-				avl.insert(palavras[0]);
->>>>>>> parent of 9161227... fixed the balancing factor calculation
-				
-				//avl.insert(dicionario);
-				
-			}
-			
-			avl.inOrder();		
-		} 
-		
+			}	
+		} 		
 	}
 	
 	public List<String> traduzPalavra(String palavra) {
+		if(palavra == null)
+			throw new IllegalArgumentException("Empty search argument.");
 		
-		Node n = avl.search(palavra);
-		
-		if(n != null) {
-			int length = n.getDicionario().getDefinicoes().size();
-			List<String> definicoes = new ArrayList<String>(length);
-			
-			for(int i = 0; i < length; i++) {
-				definicoes.add(n.getDicionario().getDefinicoes().get(i));
-			}
-			
-			return definicoes;
-		}
-	
-		
-		return null;
+		return this.avl.search(palavra).getDefinicoes();		
 	}
 	
 	public void insereTraducao(String palavra, List<String> definicoes) {
-		//Array de palavra + traducoes para realizar o insert
-		String[] palavras = new String[definicoes.size() + 1];
+		Dicionario novaTraducao = new Dicionario(palavra, definicoes);
+		this.avl.insert(novaTraducao);
+	}
+	
+	public void salvaDicionario(String filepath) {
 		
-		palavras[0] = palavra;
-		for(int i = 0; i < definicoes.size(); i++)
-			//palavras já foi inicializado com palavra
-			palavras[i+1] = definicoes.get(i);
-		
-		Dicionario dicionario = new Dicionario(palavras);
-		this.avl.insert(dicionario);
+	}
+	
+	public void mostrarDicionario() {
 		this.avl.inOrder();
-		
 	}
-	
-	public void salvaDicionario(String filepath) throws IOException {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))) {
-			List<Dicionario> dicionario = new ArrayList<Dicionario>(avl.getDicionario());
-			
-			for (int i = 0; i < dicionario.size(); i++) {
-				bw.write(dicionario.get(i).toString());
-				bw.newLine(); 
-			}
-		}
-	
-	}
-	
 }
