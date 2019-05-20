@@ -11,105 +11,128 @@ public class AVL {
 		this.root = null;
 	}
 	
+	public AVL(String key) {
+		this.root = new Node(key);
+	}
+	
 	public Node getRoot() {
 		return this.root;
 	}
 	
+	public Node search(String key) {
+	    Node current = root;
+
+	    while (current != null) {
+	        int comparison = key.compareTo(current.getKey());
+	        if (comparison == 0) {
+	            return current;
+	        } else if (comparison < 0) {
+	            current = current.getLeftChild();
+	        } else { 
+	            current = current.getRightChild();
+	        }
+	    }
+
+	    return null;
+	}
+	
+	public List<Dicionario> getDicionario() {
+    	List<Dicionario> dicionario = new ArrayList<Dicionario>();
+    	
+    	Node current = root;
+    	
+    	if(current != null)
+    		dicionario.add(current.getDicionario());
+ 	    
+ 	    while(current != null) {
+ 	    	
+ 	    	if(current.getLeftChild() != null) {
+ 	    		dicionario.add(current.getLeftChild().getDicionario());
+ 	    		current = current.getLeftChild();
+ 	    	}
+ 	    	
+ 	    	else if(current.getRightChild() != null) {
+ 	    		dicionario.add(current.getRightChild().getDicionario());
+ 	    		current = current.getRightChild();
+ 	    	}
+ 	    	
+ 	    	else
+ 	    		return dicionario;
+ 	    		
+ 	    }
+ 	    
+ 	    return null;
+    }
+	
 	public boolean insert(Dicionario dicionario) {
 		if(dicionario == null)
-			throw new NullPointerException("Empty dictionary being added!");
+			throw new NullPointerException();
 		
-		if(this.root == null) {
-			this.root = new Node(dicionario);
+		if(root == null) {
+			root = new Node(dicionario);
+			System.out.println("Root " + dicionario.getPalavra() + " ("  + dicionario + ") inserted");
 			return true;
 		}
 		
-		return insert(dicionario, this.root);
+		return insert(dicionario, root);
 	}
 	
-	private boolean insert(Dicionario dicionario, Node node) {	
-		Node child;
-		String currentKey = node.getKey();
+	public boolean insert(Dicionario dicionario, Node node) {
+		
+		Node current;
+		String parentKey = node.getKey();
+		
 		String key = dicionario.getPalavra();
 		
-		if(key.equals(currentKey))
-			throw new IllegalArgumentException("A dictionary with the " + currentKey + " already exists!");
+		if(key.equals(parentKey))
+			throw new IllegalArgumentException("A duplicated key was inserted.");
 		
-		int compare = key.compareTo(currentKey);
+		int compare = key.compareTo(parentKey);
 		
 		if(compare < 0) {			
-			child = node.getLeftChild();
+			current = node.getLeftChild();
 			
-			if(child == null) {
+			if(current == null) {
 				node.setLeftChild(new Node(dicionario));
+				
+				System.out.println("Node " + dicionario.getPalavra() + " (" + dicionario + ") inserted as a left child of Node " + node.getKey());
+				
 				return true;
 			}		
 			else
-				return insert(dicionario, child);			
+				return insert(dicionario, current);			
 		}
 		
 		else if(compare > 0) {			
-			child = node.getRightChild();
+			current = node.getRightChild();
 			
-			if(child == null) {
+			if(current == null) {
 				node.setRightChild(new Node(dicionario)); 
+				System.out.println("Node " + dicionario.getPalavra() + " (" + dicionario + ") inserted as a right child of Node " + node.getKey());
 				return true;			
 			}			
 			else
-				return insert(dicionario, child);
-		}				
+				return insert(dicionario, current);
+		}		
+		
 		return false;
 	}	
-    
-    public Dicionario search(String palavra) {
-    	if(palavra == null || this.root == null)
-    		throw new NullPointerException();
-    	
-    	return search(palavra, root);
-    }
-    
-    private Dicionario search(String palavra, Node node) {    	
-    	String nodeKey = node.getKey();
-    	Node child;
-    	
-    	if(palavra.equals(node.getKey()))
-    		return node.getDicionario();
-    	
-    	int compare = palavra.compareTo(node.getKey());
-    	
-    	if(compare < 0)
-    		return search(palavra, node.getLeftChild());
-    	
-    	if(compare > 0)
-    		return search(palavra, node.getRightChild());
-      	
-		return null;	
-    }
-
+	
     public void inOrder() {
         inOrder(this.root);
     }
     
     private void inOrder(Node node) {
-        if (node != null){
+        if (node != null)
+        {
             inOrder(node.getLeftChild());
-            //System.out.println(node.getDicionario() + " " + node.getBalanceFactor());
+            System.out.println(node.getDicionario() + " " + node.getBalanceFactor());
             inOrder(node.getRightChild());
         }
     }
     
-    public List<String> getDicionario() {  	
-    	List<String> dicionario = new ArrayList<String>();  	
-        inOrderGetContent(this.root, dicionario);
-        return dicionario;
+    public void rsd() {
+    	
     }
-    
-    private void inOrderGetContent(Node node, List<String> dicionario) {
-        if (node != null){
-            inOrderGetContent(node.getLeftChild(), dicionario);         
-            dicionario.add(node.getDicionario().toString());
-            inOrderGetContent(node.getRightChild(), dicionario);
-        }
-    }    
     
 }
