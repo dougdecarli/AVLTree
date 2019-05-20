@@ -1,8 +1,10 @@
 package tradutor;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class Tradutor {
 	
 	public List<String> traduzPalavra(String palavra) {
 		if(palavra == null)
-			throw new IllegalArgumentException("Empty search argument.");
+			throw new IllegalArgumentException("Empty search argument!");
 		
 		return this.avl.search(palavra).getDefinicoes();		
 	}
@@ -37,8 +39,15 @@ public class Tradutor {
 		this.avl.insert(novaTraducao);
 	}
 	
-	public void salvaDicionario(String filepath) {
-		
+	public void salvaDicionario(String filepath) throws IOException {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(filepath))){
+			List<String> dicionario = this.avl.getDicionario();
+			
+			for(int i = 0; i<dicionario.size(); i++) {
+				bw.append(dicionario.get(i));
+				bw.newLine();
+			}
+		} 		
 	}
 	
 	public void mostrarDicionario() {

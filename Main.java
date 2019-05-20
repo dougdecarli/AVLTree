@@ -19,6 +19,12 @@ public class Main {
 		List<String> defs = new ArrayList<String>();		
 		defs.add("tipos");defs.add("de");defs.add("carinha");defs.add("sao");	
 		tradutor.insereTraducao("d", defs);
-		tradutor.mostrarDicionario();		
+		//tradutor.mostrarDicionario();	
+		
+		try {
+			tradutor.salvaDicionario("C:\\Users\\i871294\\Desktop\\dicionario_out.dat");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

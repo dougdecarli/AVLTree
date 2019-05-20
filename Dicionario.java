@@ -42,10 +42,10 @@ public class Dicionario {
 	}
 	
 	public String toString() {
-		String str = "Palavra: " + this.palavra + " Definicoes:";
+		String str = this.palavra;
 		
 		for(int i=0; i<this.definicoes.size();i++)
-			str += " " + this.definicoes.get(i);		
+			str += "#" + this.definicoes.get(i);		
 		
 		return str;
 	}

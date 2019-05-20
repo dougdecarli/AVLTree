@@ -1,5 +1,8 @@
 package tradutor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AVL {
 	
 	private Node root;
@@ -57,18 +60,6 @@ public class AVL {
 		}				
 		return false;
 	}	
-	
-    public void inOrder() {
-        inOrder(this.root);
-    }
-    
-    private void inOrder(Node node) {
-        if (node != null){
-            inOrder(node.getLeftChild());
-            System.out.println(node.getDicionario() + " " + node.getBalanceFactor());
-            inOrder(node.getRightChild());
-        }
-    }
     
     public Dicionario search(String palavra) {
     	if(palavra == null || this.root == null)
@@ -94,5 +85,31 @@ public class AVL {
       	
 		return null;	
     }
+
+    public void inOrder() {
+        inOrder(this.root);
+    }
+    
+    private void inOrder(Node node) {
+        if (node != null){
+            inOrder(node.getLeftChild());
+            //System.out.println(node.getDicionario() + " " + node.getBalanceFactor());
+            inOrder(node.getRightChild());
+        }
+    }
+    
+    public List<String> getDicionario() {  	
+    	List<String> dicionario = new ArrayList<String>();  	
+        inOrderGetContent(this.root, dicionario);
+        return dicionario;
+    }
+    
+    private void inOrderGetContent(Node node, List<String> dicionario) {
+        if (node != null){
+            inOrderGetContent(node.getLeftChild(), dicionario);         
+            dicionario.add(node.getDicionario().toString());
+            inOrderGetContent(node.getRightChild(), dicionario);
+        }
+    }    
     
 }
