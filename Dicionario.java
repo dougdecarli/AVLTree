@@ -6,25 +6,16 @@ import java.util.List;
 
 public class Dicionario {
 	
-	protected String palavra;
+	protected String palavra; //Key
 	protected LinkedList<String> definicoes;
 	
 	public Dicionario(String[] palavras) {
-		this.definicoes = new LinkedList<String>();
+		definicoes = new LinkedList<String>();
 		
 		this.palavra = palavras[0];
 		
 		for(int i=1; i<palavras.length;i++)
 			this.definicoes.add(palavras[i]);
-	}
-	
-	public Dicionario(String palavra, List<String> definicoes) {
-		this.definicoes = new LinkedList<String>();
-		
-		this.palavra = palavra;
-		
-		for(int i=0; i<definicoes.size(); i++)
-			this.definicoes.add(definicoes.get(i));
 	}
 	
 	public String getPalavra() {
@@ -42,10 +33,10 @@ public class Dicionario {
 	}
 	
 	public String toString() {
-		String str = this.palavra;
+		String str = "Palavra: " + this.palavra + " Definicoes:";
 		
 		for(int i=0; i<this.definicoes.size();i++)
-			str += "#" + this.definicoes.get(i);		
+			str += " " + definicoes.get(i);		
 		
 		return str;
 	}
